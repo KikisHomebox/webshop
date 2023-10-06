@@ -1,13 +1,13 @@
 import {Await} from '@remix-run/react';
 import {Suspense} from 'react';
-import {Aside} from '~/components/Aside';
-import {Footer} from '~/components/Footer';
-import {Header, HeaderMenu} from '~/components/Header';
-import {CartMain} from '~/components/Cart';
+import {Aside} from '~/components/Aside/Aside';
+import {Footer} from '~/components/Footer/Footer';
+import {Header, HeaderMenu} from '~/components/Header/Header';
+import {CartMain} from '~/components/Cart/Cart';
 import {
   PredictiveSearchForm,
   PredictiveSearchResults,
-} from '~/components/Search';
+} from '~/components/Search/Search';
 
 export function Layout({cart, children = null, footer, header, isLoggedIn}) {
   return (
