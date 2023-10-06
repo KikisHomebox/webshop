@@ -1,15 +1,14 @@
 # Github runner for eslint instance should be working now in github as well
-
 name: ESLint
 
 on:
   pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   eslint:
-    name: Run eslint scanning
+    name: Run ESLint scanning
     runs-on: ubuntu-latest
     permissions:
       contents: read
