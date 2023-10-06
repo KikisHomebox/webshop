@@ -1,4 +1,4 @@
-# Github runner for eslint instance should be working now in github as well
+# Github runner for eslint instance should be working now in github as well. Testing
 name: ESLint
 
 on:
