@@ -1,0 +1,23 @@
+/* GLOBAL STYLESHEET */
+/* Add global directives here, otherwise use component-level stylesheets */
+
+:root {
+  /* Color palette */
+  --primary: #855832;
+  --primary-hover: #b59a84;
+  --primary-disabled: #b59a84;
+  --white: #fff;
+  --black: #000;
+  --text: #11151c;
+  --foreground: #11151cbf;
+  --light-gray: #dbdbdc;
+
+  /* Font size */
+  --font-base: '16px';
+  --font-scale-52: 3.25rem;
+  --font-scale-20: 1.25rem;
+  --font-scale-18: 1.125rem;
+  --font-scale-16: 1rem;
+  --font-scale-14: 0.875rem;
+  --font-scale-12: 0.75rem;
+}

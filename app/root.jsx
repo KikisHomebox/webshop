@@ -15,6 +15,7 @@ import {
 import favicon from '../public/favicon.svg';
 import resetStyles from './styles/reset.css';
 import appStyles from './styles/app.css';
+import mixinsStyles from './styles/mixins.css';
 import {Layout} from './components/Layout/Layout';
 import {cssBundleHref} from '@remix-run/css-bundle';
 
@@ -40,6 +41,7 @@ export function links() {
       : /* istanbul ignore next */ []),
     {rel: 'stylesheet', href: resetStyles},
     {rel: 'stylesheet', href: appStyles},
+    {rel: 'stylesheet', href: mixinsStyles},
     {
       rel: 'preconnect',
       href: 'https://cdn.shopify.com',
