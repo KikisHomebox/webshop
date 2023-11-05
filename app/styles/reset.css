@@ -66,11 +66,12 @@ pre {
 body {
   display: flex;
   flex-direction: column;
+  background-color: #dfdfd8;
   min-height: 100vh;
 }
 
 body > main {
-  margin: 0 1rem 1rem 1rem;
+  padding: 0 1rem 1rem 1rem;
 }
 
 section {

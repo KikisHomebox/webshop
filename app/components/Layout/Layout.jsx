@@ -2,12 +2,13 @@ import {Await} from '@remix-run/react';
 import {Suspense} from 'react';
 import {Aside} from '~/components/Aside/Aside';
 import {Footer} from '~/components/Footer/Footer';
-import {Header, HeaderMenu} from '~/components/Header/Header';
+import {Header} from '~/components/Header/Header';
 import {CartMain} from '~/components/Cart/Cart';
 import {
   PredictiveSearchForm,
   PredictiveSearchResults,
 } from '~/components/Search/Search';
+import {HeaderMenu} from '../Header/HeaderMenu';
 
 export function Layout({cart, children = null, footer, header, isLoggedIn}) {
   return (
@@ -16,6 +17,7 @@ export function Layout({cart, children = null, footer, header, isLoggedIn}) {
       <SearchAside />
       <MobileMenuAside menu={header.menu} />
       <Header header={header} cart={cart} isLoggedIn={isLoggedIn} />
+      <hr />
       <main>{children}</main>
       <Suspense>
         <Await resolve={footer}>

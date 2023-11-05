@@ -1,0 +1,28 @@
+.left-component,
+.right-component {
+  flex: 1;
+  text-align: center;
+}
+
+.middle-component {
+  flex: 2;
+  text-align: center;
+}
+
+.image {
+  height: 7rem;
+  width: 7rem;
+}
+
+.header-top {
+  background: #a57a4e;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-bottom-image {
+  height: auto;
+  max-width: 100%;
+}
