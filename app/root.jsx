@@ -35,7 +35,9 @@ export const shouldRevalidate = ({formMethod, currentUrl, nextUrl}) => {
 
 export function links() {
   return [
-    ...(cssBundleHref ? [{rel: 'stylesheet', href: cssBundleHref}] : []),
+    ...(cssBundleHref
+      ? [{rel: 'stylesheet', href: cssBundleHref}]
+      : /* istanbul ignore next */ []),
     {rel: 'stylesheet', href: resetStyles},
     {rel: 'stylesheet', href: appStyles},
     {
@@ -171,7 +173,10 @@ export function ErrorBoundary() {
  *  );
  *  ```
  *  */
-async function validateCustomerAccessToken(session, customerAccessToken) {
+export async function validateCustomerAccessToken(
+  session,
+  customerAccessToken,
+) {
   let isLoggedIn = false;
   const headers = new Headers();
   if (!customerAccessToken?.accessToken || !customerAccessToken?.expiresAt) {
@@ -261,3 +266,7 @@ const FOOTER_QUERY = `#graphql
   }
   ${MENU_FRAGMENT}
 `;
+
+export const forTestingOnly = {
+  validateCustomerAccessToken,
+};
