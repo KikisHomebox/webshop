@@ -1,53 +1,17 @@
-import {defer} from '@shopify/remix-oxygen';
-import {Await, useLoaderData, Link} from '@remix-run/react';
-import {getPaginationVariables, Image, Money} from '@shopify/hydrogen';
-import {Suspense} from 'react';
+import {useLoaderData} from '@remix-run/react';
+import Catalogue from '../components/Catalogue/Catalogue';
+import {json} from '@shopify/remix-oxygen';
 
 export async function loader({context, request}) {
   const {storefront} = context;
 
-  const paginationVariables = getPaginationVariables(request, {
-    pageBy: 4,
-  });
-  const products = storefront.query(ALL_PRODUCTS_QUERY, {
-    variables: paginationVariables,
-  });
-  return defer({products});
+  const {products} = await storefront.query(ALL_PRODUCTS_QUERY);
+  return json({products});
 }
 
 export default function Products() {
   const {products} = useLoaderData();
-  return (
-    <div className="all-products">
-      <h2>All Products</h2>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Await resolve={products}>
-          {({products}) => (
-            <div className="recommended-products-grid">
-              {products.nodes.map((product) => (
-                <Link
-                  key={product.id}
-                  className="recommended-product"
-                  to={`/products/${product.handle}`}
-                >
-                  <Image
-                    data={product.images.nodes[0]}
-                    aspectRatio="1/1"
-                    sizes="(min-width: 45em) 20vw, 50vw"
-                  />
-                  <h4>{product.title}</h4>
-                  <small>
-                    <Money data={product.priceRange.minVariantPrice} />
-                  </small>
-                </Link>
-              ))}
-            </div>
-          )}
-        </Await>
-      </Suspense>
-      <br />
-    </div>
-  );
+  return <Catalogue products={products} />;
 }
 
 const ALL_PRODUCTS_QUERY = `#graphql
@@ -55,10 +19,21 @@ fragment Product on Product {
   id
   title
   handle
+  availableForSale
   priceRange {
     minVariantPrice {
       amount
       currencyCode
+    }
+  }
+  createdAt
+  variants(first: 100) {
+    nodes {
+      id
+      availableForSale
+      price {
+        amount
+      }
     }
   }
   images(first: 1) {
@@ -70,10 +45,17 @@ fragment Product on Product {
       height
     }
   }
+  seo {
+    title
+    description
+  }
 }
-query AllProducts ($country: CountryCode, $language: LanguageCode)
+query AllProducts (
+    $country: CountryCode, 
+    $language: LanguageCode,
+  )
   @inContext(country: $country, language: $language) {
-  products(first: 250, sortKey: UPDATED_AT, reverse: true) {
+  products(first: 250) {
     nodes {
       ...Product
     }

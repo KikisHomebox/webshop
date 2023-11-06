@@ -3,20 +3,26 @@ import './ActionButton.css';
 const ActionButton = ({
   analytics,
   text,
-  disabled,
   onClick,
   fetcher,
   filled,
+  type = 'submit',
+  disabled = false,
+  customClassName = [],
   ...rest
 }) => {
   return (
-    <div className={`action-button ${filled ? 'action-button--filled' : ''}`}>
+    <div
+      className={`action-button ${customClassName.join(' ')}${
+        filled ? ' action-button--filled' : ''
+      }`}
+      {...rest}
+    >
       <input name="analytics" type="hidden" value={JSON.stringify(analytics)} />
       <button
-        type="submit"
+        type={type}
         onClick={onClick}
         disabled={disabled ?? fetcher.state !== 'idle'}
-        {...rest}
       >
         {text}
       </button>

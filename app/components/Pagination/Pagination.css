@@ -1,0 +1,43 @@
+.pagination-container {
+  display: flex;
+  flex-direction: row;
+  font-family: inherit;
+  width: fit-content;
+}
+
+.pagination-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  aspect-ratio: 1;
+  height: auto;
+  margin: 1rem;
+}
+
+.pagination-arrow:hover {
+  cursor: pointer;
+}
+
+.pagination-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  aspect-ratio: 1;
+  height: auto;
+  margin: 1rem;
+  border-bottom: 1px solid transparent;
+  transition-timing-function: ease-in-out;
+  transition-property: border-bottom;
+}
+
+.pagination-item:hover {
+  transition-duration: 0.2s;
+  border-bottom: 1px solid var(--foreground);
+  cursor: pointer;
+}
+
+.selected {
+  border-bottom: 1px solid var(--foreground);
+}
