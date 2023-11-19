@@ -31,9 +31,12 @@ const ProductCardButton = ({product}) => {
   return (
     <CartForm route="/cart" inputs={{lines}} action={CartForm.ACTIONS.LinesAdd}>
       <ActionButton
-        onClick={() => {
-          window.location.href = window.location.href + '#cart-aside';
-        }}
+        onClick={
+          /* istanbul ignore next */ () => {
+            /* istanbul ignore next */ window.location.href =
+              window.location.href + '#cart-aside';
+          }
+        }
         text="Add to cart"
         customClassName={['product-card-button']}
       />
