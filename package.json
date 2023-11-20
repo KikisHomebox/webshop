@@ -64,6 +64,10 @@
     "transform": {
       "^.+\\.jsx?$": "babel-jest",
       "^.+\\.css$": "jest-css-modules-transform"
-    }
+    },
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "\\.css$"
+    ]
   }
 }
