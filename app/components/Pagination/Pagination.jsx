@@ -40,7 +40,11 @@ const Pagination = ({
 
   const pageNumberItem = (pageNumber) => {
     if (pageNumber === DOTS) {
-      return <li className="pagination-item-dot">&#8230</li>;
+      return (
+        <li key={pageNumber} className="pagination-item-dot">
+          &#8230
+        </li>
+      );
     }
     return (
       <li
@@ -49,6 +53,7 @@ const Pagination = ({
         }`}
         disabled={pageNumber === currentPage}
         onClick={() => onPageChange(pageNumber)}
+        key={pageNumber}
       >
         {pageNumber}
       </li>
@@ -59,13 +64,17 @@ const Pagination = ({
   return (
     <ul className={`pagination-container ${customClassName.join(' ')}`}>
       {currentPage !== 1 && (
-        <li className="pagination-arrow" onClick={onPrevious}>
+        <li
+          className="pagination-arrow"
+          data-testid="previous"
+          onClick={onPrevious}
+        >
           <IoIosArrowBack />
         </li>
       )}
       {paginationRange.map((pageNumber) => pageNumberItem(pageNumber))}
       {currentPage !== lastPage && (
-        <li className="pagination-arrow" onClick={onNext}>
+        <li className="pagination-arrow" data-testid="next" onClick={onNext}>
           <IoIosArrowForward />
         </li>
       )}
