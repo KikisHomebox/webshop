@@ -1,0 +1,28 @@
+.recommendedProducts-grid {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  display: grid;
+  place-items: center;
+  border-top: 0.3px solid rgba(0, 0, 0, 0.1);
+}
+
+.recommendedProducts-body {
+  display: grid;
+  grid-gap: 2.5rem;
+  padding-top: 1rem;
+  transition: opacity 0.3s ease;
+  grid-template-columns: repeat(1, 1fr);
+  @media (min-width: 45em) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.recommendedProducts-body :hover {
+  text-decoration: underline;
+  opacity: 0.9;
+}
+
+.recommendedProduct img {
+  height: auto;
+}

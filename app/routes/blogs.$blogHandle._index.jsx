@@ -1,14 +1,15 @@
 import {json} from '@shopify/remix-oxygen';
-import {Link, useLoaderData} from '@remix-run/react';
-import {Image, Pagination, getPaginationVariables} from '@shopify/hydrogen';
+import {useLoaderData} from '@remix-run/react';
+import {getPaginationVariables} from '@shopify/hydrogen';
+import BlogsPage from '~/components/Blogs/BlogsPage';
 
 export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data.blog.title} blog`}];
+  return [{title: `Kiki's Home Box | ${data.blog.title} blog`}];
 };
 
 export const loader = async ({request, params, context: {storefront}}) => {
   const paginationVariables = getPaginationVariables(request, {
-    pageBy: 4,
+    pageBy: 250,
   });
 
   if (!params.blogHandle) {
@@ -22,72 +23,26 @@ export const loader = async ({request, params, context: {storefront}}) => {
     },
   });
 
+  const recommendedProducts = await storefront.query(
+    RECOMMENDED_PRODUCTS_QUERY,
+  );
+
   if (!blog?.articles) {
     throw new Response('Not found', {status: 404});
   }
 
-  return json({blog});
+  return json({blog, recommendedProducts});
 };
 
 export default function Blog() {
-  const {blog} = useLoaderData();
-  const {articles} = blog;
+  const data = useLoaderData();
 
   return (
-    <div className="blog">
-      <h1>{blog.title}</h1>
-      <div className="blog-grid">
-        <Pagination connection={articles}>
-          {({nodes, isLoading, PreviousLink, NextLink}) => {
-            return (
-              <>
-                <PreviousLink>
-                  {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
-                </PreviousLink>
-                {nodes.map((article, index) => {
-                  return (
-                    <ArticleItem
-                      article={article}
-                      key={article.id}
-                      loading={index < 2 ? 'eager' : 'lazy'}
-                    />
-                  );
-                })}
-                <NextLink>
-                  {isLoading ? 'Loading...' : <span>Load more ↓</span>}
-                </NextLink>
-              </>
-            );
-          }}
-        </Pagination>
-      </div>
-    </div>
-  );
-}
-
-function ArticleItem({article, loading}) {
-  const publishedAt = new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }).format(new Date(article.publishedAt));
-  return (
-    <div className="blog-article" key={article.id}>
-      <Link to={`/blogs/${article.blog.handle}/${article.handle}`}>
-        {article.image && (
-          <div className="blog-article-image">
-            <Image
-              alt={article.image.altText || article.title}
-              aspectRatio="3/2"
-              data={article.image}
-              loading={loading}
-              sizes="(min-width: 768px) 50vw, 100vw"
-            />
-          </div>
-        )}
-        <h3>{article.title}</h3>
-        <small>{publishedAt}</small>
-      </Link>
+    <div>
+      <BlogsPage
+        blogs={data.blog}
+        recommendedProducts={data.recommendedProducts}
+      />
     </div>
   );
 }
@@ -112,12 +67,14 @@ const BLOGS_QUERY = `#graphql
         first: $first,
         last: $last,
         before: $startCursor,
-        after: $endCursor
+        after: $endCursor,
+        reverse: true
       ) {
         nodes {
           ...ArticleItem
         }
         pageInfo {
+          startCursor,
           hasPreviousPage
           hasNextPage
           hasNextPage
@@ -145,6 +102,37 @@ const BLOGS_QUERY = `#graphql
     title
     blog {
       handle
+    }
+  }
+`;
+
+const RECOMMENDED_PRODUCTS_QUERY = `#graphql
+  fragment RecommendedProduct on Product {
+    id
+    title
+    handle
+    priceRange {
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+    images(first: 1) {
+      nodes {
+        id
+        url
+        altText
+        width
+        height
+      }
+    }
+  }
+  query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
+    products(first: 3, sortKey: PRICE, reverse: true) {
+      nodes {
+        ...RecommendedProduct
+      }
     }
   }
 `;

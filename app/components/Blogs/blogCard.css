@@ -1,0 +1,36 @@
+.blog-card-image {
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 0px;
+  @media (min-width: 747px) {
+    height: 30vw;
+  }
+}
+
+.blog-card-title {
+  color: white;
+  text-align: left;
+  padding: 20px 20px 10px 20px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 1.6rem;
+  width: 90%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 3em;
+  line-height: 1.5em;
+}
+
+.blog-card-text {
+  padding: 10px 20px 50px 20px;
+  color: white;
+  text-align: left;
+  letter-spacing: 0.06rem;
+  font-family: serif;
+  line-height: 1.6;
+}

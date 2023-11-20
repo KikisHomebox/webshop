@@ -9,7 +9,7 @@ import {HeaderMenu} from './HeaderMenu';
 export function Header({header, isLoggedIn, cart}) {
   const {menu} = header;
   return (
-    <div>
+    <div style={{borderBottom: '0.3px solid rgba(0, 0, 0, 0.1)'}}>
       <HeaderTop />
       <header className="header">
         <NavLink prefetch="intent" to="/" style={activeLinkStyle}>

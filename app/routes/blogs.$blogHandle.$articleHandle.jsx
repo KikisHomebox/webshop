@@ -1,9 +1,11 @@
 import {json} from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
-import {Image} from '@shopify/hydrogen';
+import SingleBlogPage from '~/components/Blogs/SingleBlogPage';
 
 export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data.article.title} article`}];
+  return [
+    {title: `Kiki's Home Box | ${data.article.articleByHandle.title} article`},
+  ];
 };
 
 export async function loader({params, context}) {
@@ -17,38 +19,28 @@ export async function loader({params, context}) {
     variables: {blogHandle, articleHandle},
   });
 
+  const recommendedProducts = await context.storefront.query(
+    RECOMMENDED_PRODUCTS_QUERY,
+  );
+
   if (!blog?.articleByHandle) {
     throw new Response(null, {status: 404});
   }
 
-  const article = blog.articleByHandle;
+  const article = blog;
 
-  return json({article});
+  return json({article, recommendedProducts});
 }
 
 export default function Article() {
-  const {article} = useLoaderData();
-  const {title, image, contentHtml, author} = article;
-
-  const publishedDate = new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }).format(new Date(article.publishedAt));
+  const data = useLoaderData();
 
   return (
-    <div className="article">
-      <h1>
-        {title}
-        <span>
-          {publishedDate} &middot; {author?.name}
-        </span>
-      </h1>
-
-      {image && <Image data={image} sizes="90vw" loading="eager" />}
-      <div
-        dangerouslySetInnerHTML={{__html: contentHtml}}
-        className="article"
+    <div>
+      <SingleBlogPage
+        article={data.article.articleByHandle}
+        blogs={data.article.articles}
+        recommendedProducts={data.recommendedProducts}
       />
     </div>
   );
@@ -81,6 +73,62 @@ const ARTICLE_QUERY = `#graphql
           description
           title
         }
+      }
+      articles(first: 15, reverse: true) {
+        nodes {
+          ...ArticleItem
+        }
+      }
+    }
+  }
+  fragment ArticleItem on Article {
+    author: authorV2 {
+      name
+    }
+    contentHtml
+    handle
+    id
+    image {
+      id
+      altText
+      url
+      width
+      height
+    }
+    publishedAt
+    title
+    blog {
+      handle
+    }
+  }
+`;
+
+const RECOMMENDED_PRODUCTS_QUERY = `#graphql
+  fragment RecommendedProduct on Product {
+    id
+    title
+    handle
+    priceRange {
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+    images(first: 1) {
+      nodes {
+        id
+        url
+        altText
+        width
+        height
+      }
+    }
+  }
+  query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
+    products(first: 3, sortKey: PRICE, reverse: true) {
+      nodes {
+        ...RecommendedProduct
       }
     }
   }
