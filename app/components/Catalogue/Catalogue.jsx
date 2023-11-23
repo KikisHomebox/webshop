@@ -23,27 +23,30 @@ const Sortable = [
   {label: 'date-desc', value: 'Date, Old - New'},
 ];
 
-const Catalogue = ({products}) => {
+const Catalogue = ({products, collections}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [availabilityFilter, setAvailabilityFilter] = useState('all');
   const [sort, setSort] = useState('featured');
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(MAX_PRICE);
+  const [collectionFilter, setCollectionFilter] = useState('');
 
   const processedData = useMemo(() => {
-    const filteredData = products.nodes
-      .filter(
-        (product) =>
-          availabilityFilter === 'all' ||
+    const filteredData = products.nodes.filter((product) => {
+      return (
+        (availabilityFilter === 'all' ||
           (availabilityFilter === 'available' && product.availableForSale) ||
-          (availabilityFilter === 'outOfStock' && !product.availableForSale),
-      )
-      .filter((product) =>
+          (availabilityFilter === 'outOfStock' && !product.availableForSale)) &&
         product.variants.nodes.some(
           (variant) =>
             variant.price.amount < maxPrice && variant.price.amount > minPrice,
-        ),
+        ) &&
+        (collectionFilter === '' ||
+          product.collections.nodes.some(
+            (collection) => collection.id === collectionFilter,
+          ))
       );
+    });
 
     if (sort === 'featured') {
       return filteredData;
@@ -77,7 +80,7 @@ const Catalogue = ({products}) => {
       default:
         return filteredData;
     }
-  }, [availabilityFilter, minPrice, maxPrice, sort]);
+  }, [availabilityFilter, minPrice, maxPrice, sort, collectionFilter]);
 
   const currentData = useMemo(() => {
     const firstPageIdx = (currentPage - 1) * PRODUCT_PER_PAGE;
@@ -100,6 +103,16 @@ const Catalogue = ({products}) => {
         setSort={setSort}
         totalCount={products.nodes.length}
         filteredCount={processedData.length}
+        collections={collections.nodes.map((collection) => ({
+          label: collection.id,
+          value: collection.title
+            ? `${collection.title.charAt(0).toUpperCase()}${collection.title
+                .slice(1)
+                .toLowerCase()}`
+            : `Unnamed collection`,
+        }))}
+        collectionFilter={collectionFilter}
+        setCollectionFilter={setCollectionFilter}
       />
       <div className="catalogue-product-container">
         {currentData.map((product) => (

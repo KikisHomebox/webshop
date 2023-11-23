@@ -6,13 +6,31 @@ export async function loader({context, request}) {
   const {storefront} = context;
 
   const {products} = await storefront.query(ALL_PRODUCTS_QUERY);
-  return json({products});
+  const {collections} = await storefront.query(ALL_COLLECTIONS_QUERY);
+  return json({
+    products,
+    collections,
+  });
 }
 
 export default function Products() {
-  const {products} = useLoaderData();
-  return <Catalogue products={products} />;
+  const {products, collections} = useLoaderData();
+  return <Catalogue products={products} collections={collections} />;
 }
+
+const ALL_COLLECTIONS_QUERY = `#graphql
+  query StoreCollections(
+    $country: CountryCode
+    $language: LanguageCode
+  ) @inContext(country: $country, language: $language) {
+    collections(first: 30) {
+      nodes {
+        id
+        title
+      }
+    }
+  }
+`;
 
 const ALL_PRODUCTS_QUERY = `#graphql
 fragment Product on Product {
@@ -43,6 +61,12 @@ fragment Product on Product {
       altText
       width
       height
+    }
+  }
+  collections(first:20) {
+    nodes {
+      id
+      title
     }
   }
   seo {

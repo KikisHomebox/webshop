@@ -18,6 +18,9 @@ const FilterAndSort = ({
   setSort,
   totalCount,
   filteredCount,
+  collections,
+  collectionFilter,
+  setCollectionFilter,
 }) => {
   const [isPriceOpen, setIsPriceOpen] = useState(false);
 
@@ -25,6 +28,7 @@ const FilterAndSort = ({
     setAvailabilityFilter('all');
     setMinPrice(0);
     setMaxPrice(549.99);
+    setCollectionFilter('');
   };
 
   return (
@@ -33,7 +37,7 @@ const FilterAndSort = ({
         <div className="catalogue-filter-container">
           <span>Filter: </span>
           <DropdownMenu
-            displayText={`Availability`}
+            displayText="Availability"
             options={availability}
             onOptionChosen={setAvailabilityFilter}
           />
@@ -132,6 +136,11 @@ const FilterAndSort = ({
               </div>
             </div>
           </div>
+          <DropdownMenu
+            displayText="Collections"
+            options={collections}
+            onOptionChosen={setCollectionFilter}
+          />
         </div>
         <div className="catalogue-sort-container">
           <span>Sort by: </span>
@@ -149,7 +158,8 @@ const FilterAndSort = ({
       </div>
       {(availabilityFilter !== 'all' ||
         minPrice !== 0 ||
-        maxPrice !== 549.99) && (
+        maxPrice !== 549.99 ||
+        collectionFilter !== '') && (
         <div className="filter-items">
           {availabilityFilter !== 'all' && (
             <span
@@ -180,6 +190,18 @@ const FilterAndSort = ({
                 data={{amount: `${maxPrice}`, currencyCode: 'EUR'}}
                 as="span"
               />
+              <AiOutlineClose />
+            </span>
+          )}
+          {collectionFilter !== '' && (
+            <span
+              className="filter-item"
+              onClick={() => setCollectionFilter('')}
+            >
+              {
+                collections.find((item) => item.label === collectionFilter)
+                  .value
+              }
               <AiOutlineClose />
             </span>
           )}
