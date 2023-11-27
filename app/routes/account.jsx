@@ -1,5 +1,6 @@
-import {Form, NavLink, Outlet, useLoaderData} from '@remix-run/react';
+import {Outlet, useLoaderData} from '@remix-run/react';
 import {json, redirect} from '@shopify/remix-oxygen';
+import AccountPage from '~/components/Account/AccountPage';
 
 export function shouldRevalidate() {
   return true;
@@ -32,11 +33,6 @@ export async function loader({request, context}) {
         isPrivateRoute,
         customer: null,
       });
-    }
-  } else {
-    // loggedIn, default redirect to the orders page
-    if (isAccountHome) {
-      return redirect('/account/orders');
     }
   }
 
@@ -74,7 +70,7 @@ export async function loader({request, context}) {
   }
 }
 
-export default function Acccount() {
+export default function Account() {
   const {customer, isPrivateRoute, isAccountHome} = useLoaderData();
 
   if (!isPrivateRoute && !isAccountHome) {
@@ -82,63 +78,9 @@ export default function Acccount() {
   }
 
   return (
-    <AccountLayout customer={customer}>
-      <br />
-      <br />
+    <AccountPage customer={customer} isAccountHome={isAccountHome}>
       <Outlet context={{customer}} />
-    </AccountLayout>
-  );
-}
-
-function AccountLayout({customer, children}) {
-  const heading = customer
-    ? customer.firstName
-      ? `Welcome, ${customer.firstName}`
-      : `Welcome to your account.`
-    : 'Account Details';
-
-  return (
-    <div className="account">
-      <h1>{heading}</h1>
-      <br />
-      <AccountMenu />
-      {children}
-    </div>
-  );
-}
-
-function AccountMenu() {
-  function isActiveStyle({isActive, isPending}) {
-    return {
-      fontWeight: isActive ? 'bold' : undefined,
-      color: isPending ? 'grey' : 'black',
-    };
-  }
-
-  return (
-    <nav role="navigation">
-      <NavLink to="/account/orders" style={isActiveStyle}>
-        Orders &nbsp;
-      </NavLink>
-      &nbsp;|&nbsp;
-      <NavLink to="/account/profile" style={isActiveStyle}>
-        &nbsp; Profile &nbsp;
-      </NavLink>
-      &nbsp;|&nbsp;
-      <NavLink to="/account/addresses" style={isActiveStyle}>
-        &nbsp; Addresses &nbsp;
-      </NavLink>
-      &nbsp;|&nbsp;
-      <Logout />
-    </nav>
-  );
-}
-
-function Logout() {
-  return (
-    <Form className="account-logout" method="POST" action="/account/logout">
-      &nbsp;<button type="submit">Sign out</button>
-    </Form>
+    </AccountPage>
   );
 }
 

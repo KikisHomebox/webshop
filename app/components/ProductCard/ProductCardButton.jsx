@@ -19,6 +19,7 @@ const ProductCardButton = ({product}) => {
         text="Choose option"
         onClick={() => navigate(`/products/${product.handle}`)}
         customClassName={['product-card-button']}
+        type={null}
       />
     );
   }

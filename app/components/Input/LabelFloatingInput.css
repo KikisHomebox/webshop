@@ -1,0 +1,55 @@
+.input-floating {
+  position: relative;
+  width: 100%;
+}
+
+.input-field {
+  display: block;
+  width: 100%;
+  padding: 1.4rem 1.25rem 0.5rem 1.25rem;
+  font-size: var(--font-scale-18);
+  border: 1px solid var(--black);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  color: var(--text);
+  background-color: transparent;
+  box-sizing: border-box;
+}
+
+.input-field:required + .input-label::after {
+  content: '*';
+  margin-left: 0.2rem;
+  color: red;
+}
+
+.input-label {
+  position: absolute;
+  color: var(--text);
+  font-size: var(--font-scale-18);
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  padding: 0 1.25rem;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+  user-select: none;
+  pointer-events: none;
+}
+
+.input-field:focus-visible,
+.input-field:focus,
+.input-field:active,
+.input-field:hover {
+  outline: 2px solid var(--black);
+  outline-offset: -2px;
+}
+
+.input-field:focus-visible ~ .input-label,
+.input-field:focus ~ .input-label,
+.input-field:active ~ .input-label,
+.input-field:not(:placeholder-shown) ~ .input-label {
+  font-size: var(--font-scale-12);
+  height: 50%;
+}

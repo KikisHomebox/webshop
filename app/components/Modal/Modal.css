@@ -1,0 +1,47 @@
+.modal {
+  display: none;
+  position: fixed;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.modal--open {
+  display: block;
+}
+
+.modal-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+.modal-content {
+  position: relative;
+  background-color: var(--background-primary);
+  margin: auto;
+  padding: 2.25rem;
+  width: 80%;
+  z-index: 1;
+  overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.modal-content::-webkit-scrollbar {
+  display: none;
+}
+
+.modal-close {
+  position: absolute;
+  font-size: 2rem;
+  top: 1rem;
+  right: 1rem;
+  margin-right: 0 !important;
+  cursor: pointer;
+}

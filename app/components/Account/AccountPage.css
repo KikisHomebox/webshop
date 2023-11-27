@@ -1,0 +1,190 @@
+fieldset {
+  width: 100%;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+p {
+  color: var(--foreground);
+}
+
+/*
+* --------------------------------------------------
+* account
+* --------------------------------------------------
+*/
+
+.account {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 40rem;
+}
+
+.account-heading {
+  text-align: center;
+  font-size: var(--font-scale-52);
+  font-weight: 400;
+  margin: 1rem auto;
+  text-transform: uppercase;
+}
+
+.account-main-heading {
+  margin: 10rem 0 2rem 0;
+}
+
+.account-navigation {
+  margin: 2rem 0 0 0;
+  display: flex;
+  gap: 1rem;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+}
+
+.logout-icon {
+  color: var(--primary);
+}
+
+.logout-btn {
+  border: none;
+  background-color: transparent;
+  color: var(--primary);
+  font-size: var(--font-scale-16);
+  font-family: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/*
+* --------------------------------------------------
+* account/addresses
+* --------------------------------------------------
+*/
+
+.account-existing-address {
+  color: var(--foreground);
+  width: 100%;
+  min-width: 30rem;
+}
+
+.account-existing-address-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.account-existing-address-info h3 {
+  color: var(--text);
+  font-size: var(--font-scale-28);
+  margin: 1rem 0;
+}
+
+.account-existing-address-info .action-button {
+  width: 8rem;
+  margin: 1.5rem 0;
+}
+
+.account-form-action-btns {
+  display: flex;
+  justify-content: right;
+  gap: 1rem;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.account-form-action-btns button {
+  min-width: 150px;
+}
+
+.account-modal-form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.account-addresses-add-new {
+  width: 40%;
+  margin: 2.5rem auto;
+}
+
+/*
+* --------------------------------------------------
+* account/detail
+* --------------------------------------------------
+*/
+
+.account-profile-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.account-profile-details p {
+  font-size: var(--font-scale-18);
+}
+
+.account-profile-edit-btn {
+  width: 150px;
+  margin: 1.5rem auto;
+}
+
+/*
+* --------------------------------------------------
+* account/orders
+* --------------------------------------------------
+*/
+
+.account-empty-order {
+  display: block;
+}
+
+.account-empty-order p {
+  font-size: var(--font-scale-18);
+}
+
+.account-empty-order .action-button {
+  margin: 1.5rem auto;
+}
+
+/*
+* --------------------------------------------------
+* account/register
+* --------------------------------------------------
+*/
+
+.account-register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.account-register form {
+  width: 100%;
+}
+
+.account-register form fieldset {
+  width: 100%;
+}
+
+.account-register-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px;
+  margin: 1rem auto;
+}
+
+.account-register-support-text {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.account-register-support-text a {
+  color: var(--primary);
+  text-decoration: underline;
+}

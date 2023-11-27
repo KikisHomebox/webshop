@@ -1,6 +1,7 @@
-import {Link, useLoaderData} from '@remix-run/react';
-import {Money, Pagination, getPaginationVariables} from '@shopify/hydrogen';
+import {useLoaderData} from '@remix-run/react';
+import {getPaginationVariables} from '@shopify/hydrogen';
 import {json, redirect} from '@shopify/remix-oxygen';
+import AccountAllOrdersPage from '~/components/Account/AccountAllOrdersPage';
 
 export const meta = () => {
   return [{title: 'Orders'}];
@@ -44,74 +45,8 @@ export async function loader({request, context}) {
 
 export default function Orders() {
   const {customer} = useLoaderData();
-  const {orders, numberOfOrders} = customer;
-  return (
-    <div className="orders">
-      <h2>
-        Orders <small>({numberOfOrders})</small>
-      </h2>
-      <br />
-      {orders.nodes.length ? <OrdersTable orders={orders} /> : <EmptyOrders />}
-    </div>
-  );
-}
 
-function OrdersTable({orders}) {
-  return (
-    <div className="acccount-orders">
-      {orders?.nodes.length ? (
-        <Pagination connection={orders}>
-          {({nodes, isLoading, PreviousLink, NextLink}) => {
-            return (
-              <>
-                <PreviousLink>
-                  {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
-                </PreviousLink>
-                {nodes.map((order) => {
-                  return <OrderItem key={order.id} order={order} />;
-                })}
-                <NextLink>
-                  {isLoading ? 'Loading...' : <span>Load more ↓</span>}
-                </NextLink>
-              </>
-            );
-          }}
-        </Pagination>
-      ) : (
-        <EmptyOrders />
-      )}
-    </div>
-  );
-}
-
-function EmptyOrders() {
-  return (
-    <div>
-      <p>You haven&apos;t placed any orders yet.</p>
-      <br />
-      <p>
-        <Link to="/collections">Start Shopping →</Link>
-      </p>
-    </div>
-  );
-}
-
-function OrderItem({order}) {
-  return (
-    <>
-      <fieldset>
-        <Link to={`/account/orders/${order.id}`}>
-          <strong>#{order.orderNumber}</strong>
-        </Link>
-        <p>{new Date(order.processedAt).toDateString()}</p>
-        <p>{order.financialStatus}</p>
-        <p>{order.fulfillmentStatus}</p>
-        <Money data={order.currentTotalPrice} />
-        <Link to={`/account/orders/${btoa(order.id)}`}>View Order →</Link>
-      </fieldset>
-      <br />
-    </>
-  );
+  return <AccountAllOrdersPage customer={customer} />;
 }
 
 const ORDER_ITEM_FRAGMENT = `#graphql

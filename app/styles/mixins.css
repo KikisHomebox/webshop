@@ -9,15 +9,22 @@
   --white: #fff;
   --black: #000;
   --text: #11151c;
+  --background-light: #fefefe;
+  --background-primary: #dfdfd8;
   --foreground: #11151cbf;
   --light-gray: #dbdbdc;
 
   /* Font size */
   --font-base: '16px';
   --font-scale-52: 3.25rem;
+  --font-scale-48: 3rem;
+  --font-scale-36: 2rem;
+  --font-scale-28: 1.75rem;
+  --font-scale-24: 1.5rem;
   --font-scale-20: 1.25rem;
   --font-scale-18: 1.125rem;
   --font-scale-16: 1rem;
   --font-scale-14: 0.875rem;
   --font-scale-12: 0.75rem;
+  --font-scale-8: 0.5rem;
 }
