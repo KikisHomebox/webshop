@@ -1,5 +1,7 @@
 import {json} from '@shopify/remix-oxygen';
-import {useLoaderData, Link} from '@remix-run/react';
+import {useLoaderData} from '@remix-run/react';
+
+import PoliciesMainPage from '~/components/Policies/PoliciesMainPage';
 
 export async function loader({context}) {
   const data = await context.storefront.query(POLICIES_QUERY);
@@ -15,21 +17,7 @@ export async function loader({context}) {
 export default function Policies() {
   const {policies} = useLoaderData();
 
-  return (
-    <div className="policies">
-      <h1>Policies</h1>
-      <div>
-        {policies.map((policy) => {
-          if (!policy) return null;
-          return (
-            <fieldset key={policy.id}>
-              <Link to={`/policies/${policy.handle}`}>{policy.title}</Link>
-            </fieldset>
-          );
-        })}
-      </div>
-    </div>
-  );
+  return <PoliciesMainPage policies={policies} />;
 }
 
 const POLICIES_QUERY = `#graphql

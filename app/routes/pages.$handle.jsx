@@ -1,6 +1,8 @@
 import {json} from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
 
+import StaticPage from '~/components/StaticPage/StaticPage';
+
 export const meta = ({data}) => {
   return [{title: `Hydrogen | ${data.page.title}`}];
 };
@@ -26,14 +28,7 @@ export async function loader({params, context}) {
 export default function Page() {
   const {page} = useLoaderData();
 
-  return (
-    <div className="page">
-      <header>
-        <h1>{page.title}</h1>
-      </header>
-      <main dangerouslySetInnerHTML={{__html: page.body}} />
-    </div>
-  );
+  return <StaticPage page={page} />;
 }
 
 const PAGE_QUERY = `#graphql

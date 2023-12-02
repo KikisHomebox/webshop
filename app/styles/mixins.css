@@ -18,6 +18,7 @@
 
   /* Font size */
   --font-base: '16px';
+  --font-scale-60: 3.75rem;
   --font-scale-52: 3.25rem;
   --font-scale-48: 3rem;
   --font-scale-36: 2rem;

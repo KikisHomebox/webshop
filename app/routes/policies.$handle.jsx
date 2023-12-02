@@ -1,5 +1,7 @@
 import {json} from '@shopify/remix-oxygen';
-import {Link, useLoaderData} from '@remix-run/react';
+import {useLoaderData} from '@remix-run/react';
+
+import Policies from '~/components/Policies/Policies';
 
 export const meta = ({data}) => {
   return [{title: `Hydrogen | ${data.policy.title}`}];
@@ -37,18 +39,7 @@ export async function loader({params, context}) {
 export default function Policy() {
   const {policy} = useLoaderData();
 
-  return (
-    <div className="policy">
-      <br />
-      <br />
-      <div>
-        <Link to="/policies">← Back to Policies</Link>
-      </div>
-      <br />
-      <h1>{policy.title}</h1>
-      <div dangerouslySetInnerHTML={{__html: policy.body}} />
-    </div>
-  );
+  return <Policies policy={policy} />;
 }
 
 // NOTE: https://shopify.dev/docs/api/storefront/latest/objects/Shop

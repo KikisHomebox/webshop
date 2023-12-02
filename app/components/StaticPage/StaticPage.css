@@ -1,0 +1,42 @@
+.page {
+  padding: 1.5rem 3.125rem;
+  max-width: 50rem;
+  margin: 0 auto;
+  color: var(--foreground);
+}
+
+.page-title {
+  font-size: var(--font-scale-52);
+  font-family: inherit;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+div,
+p span {
+  font-family: inherit;
+  line-height: 1.8rem;
+  color: var(--foreground);
+  font-size: var(--font-scale-16);
+}
+
+p {
+  display: block;
+  margin: 1rem 0;
+  line-height: 1.8rem;
+  text-align: justify;
+}
+
+p a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+p a:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+div ul {
+  list-style: inside;
+}

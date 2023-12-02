@@ -6,13 +6,6 @@ body {
   padding: 0;
 }
 
-h1,
-h2,
-p {
-  margin: 0;
-  padding: 0;
-}
-
 h1 {
   font-size: 1.6rem;
   font-weight: 700;
@@ -36,11 +29,6 @@ h4 {
 h5 {
   margin-bottom: 1rem;
   margin-top: 0.5rem;
-}
-
-p {
-  font-size: 1rem;
-  line-height: 1.4;
 }
 
 a {
