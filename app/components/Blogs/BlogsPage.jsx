@@ -5,7 +5,7 @@ import {Link} from '@remix-run/react';
 import {useState, useMemo} from 'react';
 import RecommendedProducts from '../RecommendedProducts/RecommendedProducts';
 
-const BLOGS_PER_PAGE = 4;
+const BLOGS_PER_PAGE = 6;
 
 const BlogsPage = ({blogs, recommendedProducts}) => {
   const [currentPage, setCurrentPage] = useState(1);
