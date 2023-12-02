@@ -87,7 +87,7 @@ export async function loader({context}) {
   return defer(
     {
       cart: cartPromise,
-      footer: footerPromise,
+      footer: await footerPromise,
       header: await headerPromise,
       isLoggedIn,
       publicStoreDomain,
@@ -257,6 +257,30 @@ const HEADER_QUERY = `#graphql
 `;
 
 const FOOTER_QUERY = `#graphql
+  fragment PolicyItem on ShopPolicy {
+    id
+    title
+    handle
+  }
+  fragment Shop on Shop {
+    name
+    privacyPolicy {
+      ...PolicyItem
+    }
+    shippingPolicy {
+      ...PolicyItem
+    }
+    termsOfService {
+      ...PolicyItem
+    }
+    refundPolicy {
+      ...PolicyItem
+    }
+    paymentSettings {
+      acceptedCardBrands
+      supportedDigitalWallets
+    }
+  }
   query Footer(
     $country: CountryCode
     $footerMenuHandle: String!
@@ -264,6 +288,9 @@ const FOOTER_QUERY = `#graphql
   ) @inContext(language: $language, country: $country) {
     menu(handle: $footerMenuHandle) {
       ...Menu
+    }
+    shop {
+      ...Shop
     }
   }
   ${MENU_FRAGMENT}
