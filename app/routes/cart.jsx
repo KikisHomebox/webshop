@@ -54,6 +54,11 @@ export async function action({request, context}) {
       });
       break;
     }
+    case CartForm.ACTIONS.NoteUpdate: {
+      const note = String(formData.get('note') || '');
+      result = await cart.updateNote(note);
+      break;
+    }
     default:
       throw new Error(`${action} cart action is not defined`);
   }
@@ -85,15 +90,12 @@ export default function Cart() {
   const cart = root.data?.cart;
 
   return (
-    <div className="cart">
-      <h1>Cart</h1>
-      <Suspense fallback={<p>Loading cart ...</p>}>
-        <Await errorElement={<div>An error occurred</div>} resolve={cart}>
-          {(cart) => {
-            return <CartMain layout="page" cart={cart} />;
-          }}
-        </Await>
-      </Suspense>
-    </div>
+    <Suspense fallback={<p>Loading cart ...</p>}>
+      <Await errorElement={<div>An error occurred</div>} resolve={cart}>
+        {(cart) => {
+          return <CartMain layout="page" cart={cart} />;
+        }}
+      </Await>
+    </Suspense>
   );
 }

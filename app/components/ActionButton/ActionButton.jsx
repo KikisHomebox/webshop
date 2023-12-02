@@ -13,9 +13,9 @@ const ActionButton = ({
 }) => {
   return (
     <div
-      className={`action-button ${customClassName.join(' ')}${
+      className={`action-button${
         filled ? ' action-button--filled' : ''
-      }`}
+      } ${customClassName.join(' ')}`}
     >
       <input name="analytics" type="hidden" value={JSON.stringify(analytics)} />
       <button

@@ -1,43 +1,40 @@
 import {Await} from '@remix-run/react';
-import {Suspense} from 'react';
+import {Suspense, createContext, useState} from 'react';
 import {Aside} from '~/components/Aside/Aside';
 import {Footer} from '~/components/Footer/Footer';
 import {Header} from '~/components/Header/Header';
-import {CartMain} from '~/components/Cart/Cart';
+import {CartComponent} from '~/components/Cart/Cart';
 import {
   PredictiveSearchForm,
   PredictiveSearchResults,
 } from '~/components/Search/Search';
 import {HeaderMenu} from '../Header/HeaderMenu';
 
-export function Layout({cart, children = null, footer, header, isLoggedIn}) {
-  return (
-    <>
-      <CartAside cart={cart} />
-      <SearchAside />
-      <MobileMenuAside menu={header.menu} />
-      <Header header={header} cart={cart} isLoggedIn={isLoggedIn} />
-      <main>{children}</main>
-      <Suspense>
-        <Await resolve={footer}>
-          {(footer) => <Footer menu={footer.menu} shop={footer.shop} />}
-        </Await>
-      </Suspense>
-    </>
-  );
-}
+export const CartContext = createContext(null);
 
-function CartAside({cart}) {
+export function Layout({cart, children = null, footer, header, isLoggedIn}) {
+  const [cartOpen, setCartOpen] = useState(false);
+
   return (
-    <Aside id="cart-aside" heading="CART">
-      <Suspense fallback={<p>Loading cart ...</p>}>
-        <Await resolve={cart}>
-          {(cart) => {
-            return <CartMain cart={cart} layout="aside" />;
-          }}
-        </Await>
-      </Suspense>
-    </Aside>
+    <CartContext.Provider
+      value={{
+        cartOpen,
+        setCartOpen,
+      }}
+    >
+      <div className={`${cartOpen ? 'disable-scroll' : ''}`}>
+        <CartComponent cart={cart} layout="aside" />
+        <SearchAside />
+        <MobileMenuAside menu={header.menu} />
+        <Header header={header} cart={cart} isLoggedIn={isLoggedIn} />
+        <main>{children}</main>
+        <Suspense>
+          <Await resolve={footer}>
+            {(footer) => <Footer menu={footer.menu} />}
+          </Await>
+        </Suspense>
+      </div>
+    </CartContext.Provider>
   );
 }
 

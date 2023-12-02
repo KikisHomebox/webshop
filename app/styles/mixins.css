@@ -15,19 +15,23 @@
   --light-gray: #dbdbdc;
   --light-text: #dfdfd8;
   --light-text-foreground: #dfdfd8bf;
+  --link-font-color: #855832d9;
+  --border-bottom-color: #11151c14;
 
   /* Font size */
   --font-base: '16px';
   --font-scale-60: 3.75rem;
   --font-scale-52: 3.25rem;
   --font-scale-48: 3rem;
-  --font-scale-36: 2rem;
+  --font-scale-32: 2rem;
   --font-scale-28: 1.75rem;
+  --font-scale-26: 1.625rem;
   --font-scale-24: 1.5rem;
   --font-scale-20: 1.25rem;
   --font-scale-18: 1.125rem;
   --font-scale-16: 1rem;
   --font-scale-14: 0.875rem;
   --font-scale-12: 0.75rem;
+  --font-scale-10: 0.625rem;
   --font-scale-8: 0.5rem;
 }

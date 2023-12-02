@@ -21,3 +21,7 @@
   align-items: center;
   justify-content: center;
 }
+
+.header-cart-badge:hover {
+  cursor: pointer;
+}

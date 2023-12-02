@@ -1,11 +1,13 @@
 import {VariantSelector, CartForm} from '@shopify/hydrogen';
 import {AiOutlinePlus, AiOutlineMinus} from 'react-icons/ai';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 
 import ProductOptions from './ProductOptions';
 import ActionButton from '../ActionButton/ActionButton';
+import {CartContext} from '../Layout/Layout';
 
 const ProductForm = ({product, selectedVariant, variants}) => {
+  const {setCartOpen} = useContext(CartContext);
   const [lines, setLines] = useState(
     selectedVariant
       ? [
@@ -71,9 +73,7 @@ const ProductForm = ({product, selectedVariant, variants}) => {
         {(fetcher) => (
           <ActionButton
             disabled={!selectedVariant || !selectedVariant.availableForSale}
-            onClick={() => {
-              window.location.href = window.location.href + '#cart-aside';
-            }}
+            onClick={() => setCartOpen(true)}
             text={
               selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'
             }

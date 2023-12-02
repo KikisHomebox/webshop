@@ -2,6 +2,21 @@ import '@testing-library/jest-dom';
 import {render, screen, fireEvent} from '@testing-library/react';
 import ProductCardButton from '../../../components/ProductCard/ProductCardButton';
 import {useNavigate} from '@remix-run/react';
+import React from 'react';
+
+// eslint-disable-next-line no-unused-vars
+let useContextMock;
+let realUseContext;
+
+// Mock Cart context
+beforeEach(() => {
+  realUseContext = React.useContext;
+  useContextMock = React.useContext = () => ({setCartOpen: jest.fn()});
+});
+
+afterEach(() => {
+  React.useContext = realUseContext;
+});
 
 jest.mock('@shopify/hydrogen', () => {
   const CartForm = jest.fn(() => 'mockCartForm');

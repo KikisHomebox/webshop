@@ -1,10 +1,11 @@
 import {Await, NavLink} from '@remix-run/react';
-import {Suspense} from 'react';
+import {Suspense, useContext} from 'react';
 import logo from '../../../public/kikiHomeBoxLogo.avif';
 import './header.css';
 import {BsSearch, BsPerson, BsCart3} from 'react-icons/bs';
 import HeaderTop from './HeaderTop';
 import {HeaderMenu} from './HeaderMenu';
+import {CartContext} from '../Layout/Layout';
 
 export function Header({header, isLoggedIn, cart}) {
   const {menu} = header;
@@ -53,20 +54,27 @@ function SearchToggle() {
 }
 
 function CartBadge({count}) {
+  const {setCartOpen} = useContext(CartContext);
   return (
-    <a href="#cart-aside" style={{textDecoration: 'none'}}>
+    <span onClick={() => setCartOpen(true)} className="header-cart-badge">
       <BsCart3 style={{fontSize: '20px'}} /> {count}
-    </a>
+    </span>
   );
 }
 
 function CartToggle({cart}) {
+  const {setCartOpen} = useContext(CartContext);
   return (
     <Suspense fallback={<CartBadge count={0} />}>
       <Await resolve={cart}>
         {(cart) => {
           if (!cart) return <CartBadge count={0} />;
-          return <CartBadge count={cart.totalQuantity || 0} />;
+          return (
+            <CartBadge
+              count={cart.totalQuantity || 0}
+              setCartOpen={setCartOpen}
+            />
+          );
         }}
       </Await>
     </Suspense>

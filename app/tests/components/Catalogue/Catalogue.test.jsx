@@ -1,6 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Catalogue from '~/components/Catalogue/Catalogue';
+import React from 'react';
 
 const MOCK_PRODUCTS = {
   nodes: [
@@ -159,14 +160,21 @@ jest.mock('../../../components/Pagination/Pagination', () => () => {
   return <div>Pagination</div>;
 });
 
-// Mock the global window object
+// eslint-disable-next-line no-unused-vars
+let useContextMock;
+let realUseContext;
+
+// Mock the global window object and Cart context
 beforeEach(() => {
   global.scrollTo = jest.fn();
+  realUseContext = React.useContext;
+  useContextMock = React.useContext = () => ({setCartOpen: jest.fn()});
 });
 
 afterEach(() => {
   global.scrollTo.mockClear();
   delete global.scrollTo;
+  React.useContext = realUseContext;
 });
 
 describe('Catalogue Component', () => {
