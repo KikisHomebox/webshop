@@ -22,7 +22,6 @@ const BlogsPage = ({blogs, recommendedProducts}) => {
       <div className="blogs-grid">
         {currentData.map((node) => (
           <Link
-            key={`blog-${node.blog.handle}`}
             to={`/blogs/${node.blog.handle}/${node.handle}`}
             className="blogs-a"
           >
