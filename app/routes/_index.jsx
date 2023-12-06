@@ -1,7 +1,6 @@
-import {defer} from '@shopify/remix-oxygen';
-import {Await, useLoaderData, Link} from '@remix-run/react';
-import {Suspense} from 'react';
-import {Image, Money} from '@shopify/hydrogen';
+import {json} from '@shopify/remix-oxygen';
+import {useLoaderData} from '@remix-run/react';
+import MainPage from '~/components/MainPage/MainPage';
 
 export const meta = () => {
   return [{title: 'Hydrogen | Home'}];
@@ -9,106 +8,52 @@ export const meta = () => {
 
 export async function loader({context}) {
   const {storefront} = context;
-  const {collections} = await storefront.query(FEATURED_COLLECTION_QUERY);
-  const featuredCollection = collections.nodes[0];
-  const recommendedProducts = storefront.query(RECOMMENDED_PRODUCTS_QUERY);
 
-  return defer({featuredCollection, recommendedProducts});
+  const recommendedProducts = await storefront.query(
+    RECOMMENDED_PRODUCTS_QUERY,
+  );
+  const {blogs} = await storefront.query(BLOGS_QUERY);
+  const bestSellers = await storefront.query(BEST_SELLING_PRODUCTS_QUERY);
+
+  return json({
+    recommendedProducts: recommendedProducts.products.nodes,
+    blogs: blogs.nodes[0],
+    bestSellers: bestSellers.products.nodes,
+  });
 }
 
 export default function Homepage() {
-  const data = useLoaderData();
+  const {recommendedProducts, blogs, bestSellers} = useLoaderData();
   return (
     <div className="home">
-      <FeaturedCollection collection={data.featuredCollection} />
-      <RecommendedProducts products={data.recommendedProducts} />
+      <MainPage
+        recommendedProducts={recommendedProducts}
+        blogs={blogs}
+        bestSellers={bestSellers}
+      />
     </div>
   );
 }
-
-function FeaturedCollection({collection}) {
-  const image = collection.image;
-  return (
-    <Link
-      className="featured-collection"
-      to={`/collections/${collection.handle}`}
-    >
-      {image && (
-        <div className="featured-collection-image">
-          <Image data={image} sizes="100vw" />
-        </div>
-      )}
-      <h1>{collection.title}</h1>
-    </Link>
-  );
-}
-
-function RecommendedProducts({products}) {
-  return (
-    <div className="recommended-products">
-      <h2>Recommended Products</h2>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Await resolve={products}>
-          {({products}) => (
-            <div className="recommended-products-grid">
-              {products.nodes.map((product) => (
-                <Link
-                  key={product.id}
-                  className="recommended-product"
-                  to={`/products/${product.handle}`}
-                >
-                  <Image
-                    data={product.images.nodes[0]}
-                    aspectRatio="1/1"
-                    sizes="(min-width: 45em) 20vw, 50vw"
-                  />
-                  <h4>{product.title}</h4>
-                  <small>
-                    <Money data={product.priceRange.minVariantPrice} />
-                  </small>
-                </Link>
-              ))}
-            </div>
-          )}
-        </Await>
-      </Suspense>
-      <br />
-    </div>
-  );
-}
-
-const FEATURED_COLLECTION_QUERY = `#graphql
-  fragment FeaturedCollection on Collection {
-    id
-    title
-    image {
-      id
-      url
-      altText
-      width
-      height
-    }
-    handle
-  }
-  query FeaturedCollection($country: CountryCode, $language: LanguageCode)
-    @inContext(country: $country, language: $language) {
-    collections(first: 1, sortKey: UPDATED_AT, reverse: true) {
-      nodes {
-        ...FeaturedCollection
-      }
-    }
-  }
-`;
 
 const RECOMMENDED_PRODUCTS_QUERY = `#graphql
   fragment RecommendedProduct on Product {
     id
     title
     handle
+    availableForSale
     priceRange {
       minVariantPrice {
         amount
         currencyCode
+      }
+    }
+    variants(first: 100) {
+      nodes {
+        id
+        availableForSale
+        price {
+          amount
+        }
       }
     }
     images(first: 1) {
@@ -123,9 +68,94 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
   }
   query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {
-    products(first: 4, sortKey: UPDATED_AT, reverse: true) {
+    products(first: 3, sortKey: UPDATED_AT, reverse: true) {
       nodes {
         ...RecommendedProduct
+      }
+    }
+  }
+`;
+
+const BEST_SELLING_PRODUCTS_QUERY = `#graphql
+  fragment BestSellingProduct on Product {
+    id
+    title
+    handle
+    availableForSale
+    priceRange {
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+    variants(first: 100) {
+      nodes {
+        id
+        availableForSale
+        price {
+          amount
+        }
+      }
+    }
+    images(first: 1) {
+      nodes {
+        id
+        url
+        altText
+        width
+        height
+      }
+    }
+  }
+  query BestSellingProducts ($country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
+    products(first: 3, sortKey: BEST_SELLING, reverse: true) {
+      nodes {
+        ...BestSellingProduct
+      }
+    }
+  }
+`;
+
+const BLOGS_QUERY = `#graphql
+  query Blogs(
+    $country: CountryCode
+    $language: LanguageCode
+  ) @inContext(country: $country, language: $language) {
+    blogs(
+      first: 3,
+    ) {
+      nodes {
+        title
+        handle
+        seo {
+          title
+          description
+        }
+        articles(
+          first: 3,
+          reverse: true
+        ) {
+          nodes{
+            contentHtml
+            handle
+            publishedAt
+            id
+            image {
+              id
+              altText
+              url
+            }
+            title
+            blog {
+              handle
+            }
+            seo {
+              description
+              title
+            }
+          }
+        }
       }
     }
   }

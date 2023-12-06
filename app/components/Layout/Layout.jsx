@@ -1,7 +1,7 @@
 import {Await} from '@remix-run/react';
 import {Suspense, createContext, useState} from 'react';
 import {Aside} from '~/components/Aside/Aside';
-import {Footer} from '~/components/Footer/Footer';
+import Footer from '~/components/Footer/Footer';
 import {Header} from '~/components/Header/Header';
 import {CartComponent} from '~/components/Cart/Cart';
 import {
@@ -30,7 +30,7 @@ export function Layout({cart, children = null, footer, header, isLoggedIn}) {
         <main>{children}</main>
         <Suspense>
           <Await resolve={footer}>
-            {(footer) => <Footer menu={footer.menu} />}
+            {(footer) => <Footer menu={footer.menu} shop={footer.shop} />}
           </Await>
         </Suspense>
       </div>
