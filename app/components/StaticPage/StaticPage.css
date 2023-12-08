@@ -40,3 +40,80 @@ p a:hover {
 div ul {
   list-style: inside;
 }
+
+.contact-us {
+  padding-top: 10px;
+  padding-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-us .form-group {
+  padding-top: 11px;
+}
+
+.contact-us button {
+  font-size: 1.25em;
+  font-family: inherit;
+  color: #fff;
+  background-color: #754e2f;
+  width: 15vmin;
+  height: 5vmin;
+  border-radius: 5px;
+}
+
+.contact-us input {
+  font-size: 1em;
+  min-width: 35vmin;
+  height: 40px;
+}
+
+.contact-us form {
+  position: relative;
+}
+
+.contact-us label {
+  position: absolute;
+  font-size: larger;
+  left: 5px;
+  top: 17px;
+  transform-origin: 0 0;
+}
+
+label[for='form-email'] {
+  top: 75px;
+}
+
+label[for='form-phonenumber'] {
+  top: 130px;
+}
+
+label[for='form-comment'] {
+  top: 196px;
+  left: 9px;
+}
+
+#form-comment {
+  padding-top: 17px;
+  padding-left: 7px;
+  padding-right: 7px;
+  height: 100px;
+  min-width: 34vmin;
+  font-family: inherit;
+  font-size: 1em;
+}
+
+.contact-us input:focus + label,
+input:not(:placeholder-shown) + label {
+  transform: translateY(-0.44em) scale(0.75);
+  transition: transform 75ms ease-in-out;
+}
+
+.contact-us textarea:focus + label,
+textarea:not(:placeholder-shown) + label {
+  transform: translateY(-0.53em) scale(0.75);
+  transition: transform 75ms ease-in-out;
+}
+
