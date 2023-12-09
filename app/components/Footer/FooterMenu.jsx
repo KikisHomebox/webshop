@@ -58,7 +58,7 @@ const FooterMenu = ({menu}) => {
       <div className="footer-menu-navbar">
         <h2 className="footer-menu-title">Quick links</h2>
         <nav className="footer-menu-nav" role="navigation">
-          {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
+          {(menu || FALLBACK_FOOTER_MENU).items.map((item, index) => {
             if (!item.url) return null;
             // if the url is internal, we strip the domain
             const url = item.url.includes(publicStoreDomain)
@@ -68,7 +68,7 @@ const FooterMenu = ({menu}) => {
             return isExternal ? (
               <a
                 href={url}
-                key={item.id}
+                key={`${item.id}-${index}`}
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -77,7 +77,7 @@ const FooterMenu = ({menu}) => {
             ) : (
               <NavLink
                 end
-                key={item.id}
+                key={`${item.id}-${index}`}
                 prefetch="intent"
                 style={activeLinkStyle}
                 to={url}

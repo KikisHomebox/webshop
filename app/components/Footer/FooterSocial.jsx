@@ -18,9 +18,9 @@ const SOCIAL_MEDIA_MAPPING = {
 const FooterSocial = () => {
   return (
     <div className="footer-social">
-      {Object.keys(SOCIAL_MEDIA_MAPPING).map((key) => (
+      {Object.keys(SOCIAL_MEDIA_MAPPING).map((key, index) => (
         <a
-          key={SOCIAL_MEDIA_MAPPING[key]}
+          key={`${SOCIAL_MEDIA_MAPPING[key]}-${index}`}
           href={SOCIAL_MEDIA_MAPPING[key].url}
           target="_blank"
           rel="noreferrer"

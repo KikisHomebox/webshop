@@ -15,11 +15,11 @@ const PAYMENT_OPTIONS_MAPPING = {
 
 const FooterPaymentOptions = ({paymentOptions}) => {
   const {acceptedCardBrands, supportedDigitalWallets} = paymentOptions;
-  const options = acceptedCardBrands.concat(supportedDigitalWallets);
+  const options = acceptedCardBrands?.concat(supportedDigitalWallets);
 
   return (
     <ul className="footer-payment-options">
-      {options.map((option) => (
+      {options?.map((option) => (
         <li className="footer-payment-option" key={option}>
           <img src={PAYMENT_OPTIONS_MAPPING[option]} alt={option} />
         </li>

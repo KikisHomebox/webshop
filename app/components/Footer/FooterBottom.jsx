@@ -25,13 +25,13 @@ const FooterBottom = ({shop}) => {
         >
           Power By shopify
         </a>
-        {policies.map((policy) => (
+        {policies.map((policy, index) => (
           <Link
             className="footer-bottom-content-policy"
-            to={`/policies/${policy.handle}`}
-            key={policy.title}
+            to={`/policies/${policy?.handle}`}
+            key={`footer-${policy?.handle || ''}-${index}`}
           >
-            {policy.title}
+            {policy?.title}
           </Link>
         ))}
       </div>

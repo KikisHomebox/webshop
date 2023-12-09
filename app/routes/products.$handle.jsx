@@ -1,4 +1,4 @@
-import {defer, redirect} from '@shopify/remix-oxygen';
+import {json, redirect} from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
 
 import {getSelectedProductOptions} from '@shopify/hydrogen';
@@ -61,11 +61,11 @@ export async function loader({params, request, context}) {
   // into it's own separate query that is deferred. So there's a brief moment
   // where variant options might show as available when they're not, but after
   // this deffered query resolves, the UI will update.
-  const variants = storefront.query(VARIANTS_QUERY, {
+  const variants = await storefront.query(VARIANTS_QUERY, {
     variables: {handle},
   });
 
-  return defer({product, variants});
+  return json({product, variants});
 }
 
 function redirectToFirstVariant({product, request}) {
