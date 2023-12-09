@@ -2,8 +2,22 @@ import {json} from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
 import MainPage from '~/components/MainPage/MainPage';
 
-export const meta = () => {
-  return [{title: 'Hydrogen | Home'}];
+const seo = ({data}) => ({
+  title: window.location.href.includes('/fi')
+    ? `Kiki's homebox | Kaikki kodin tarvikkeet yhdessä laatikossa`
+    : `Kiki's homebox | All home essentials in one box`,
+
+  description: window.location.href.includes('/fi')
+    ? "Tutustu KIKI's Home Boxiin, äärimmäiseen ratkaisuun vaivattomaan muuttoon ja asettautumiseen Suomeen. " +
+      'Tarjoamme kattavia kodin tarvikkeita ja muuttajille räätälöityjä palveluita. Tutustu korkealaatuisiin' +
+      "tuotteisiin, mukavuuteen ja kohtuuhintaisuuteen. Yksinkertaista siirtymistäsi helpommin ALKUUN KIKI's Home Boxin."
+    : "Discover KIKI'S Home Box, the ultimate solution for hassle-free relocation and settling in Finland. " +
+      'We provide comprehensive home essential kits and services tailored for movers. Explore our high-quality ' +
+      "products, convenience and affordability. Simplify your transition for AN EASIER START with KIKI'S Home Box.",
+});
+
+export const handle = {
+  seo,
 };
 
 export async function loader({context}) {

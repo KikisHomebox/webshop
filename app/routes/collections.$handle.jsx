@@ -8,8 +8,13 @@ import {
 } from '@shopify/hydrogen';
 import {useVariantUrl} from '~/utils';
 
-export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data.collection.title} Collection`}];
+const seo = ({data}) => ({
+  title: `${data?.collection?.title} | Kiki's Home Box`,
+  description: `${data?.collection?.description}`,
+});
+
+export const handle = {
+  seo,
 };
 
 export async function loader({request, params, context}) {

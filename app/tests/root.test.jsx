@@ -19,9 +19,11 @@ jest.mock('../components/Layout/Layout', () => {
 
 jest.mock('@shopify/hydrogen', () => {
   const useNonce = jest.fn(() => 'mockNonce');
+  const Seo = jest.fn(() => 'mockSeo');
 
   return {
     useNonce,
+    Seo,
   };
 });
 

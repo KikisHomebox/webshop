@@ -2,11 +2,24 @@ import {json} from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
 import SingleBlogPage from '~/components/Blogs/SingleBlogPage';
 
-export const meta = ({data}) => {
-  return [
-    {title: `Kiki's Home Box | ${data.article.articleByHandle.title} article`},
-  ];
+const seo = ({data}) => ({
+  title: `Kiki's homebox | ${data.article.articleByHandle.title}`,
+
+  description: getMetaDescriptionText({
+    blogHtml: data.article.articleByHandle.contentHtml,
+  }),
+});
+
+export const handle = {
+  seo,
 };
+
+function getMetaDescriptionText({blogHtml}) {
+  const tempElement = document.createElement('div');
+  tempElement.innerHTML = blogHtml;
+  const blogText = tempElement.querySelector('p').innerText;
+  return blogText.substring(0, 160);
+}
 
 export async function loader({params, context}) {
   const {blogHandle, articleHandle} = params;
