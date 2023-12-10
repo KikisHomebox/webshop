@@ -4,7 +4,7 @@ import {useLoaderData} from '@remix-run/react';
 import Policies from '~/components/Policies/Policies';
 
 export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data.policy.title}`}];
+  return [{title: `Kiki's Home Box | ${data.policy.title}`}];
 };
 
 export async function loader({params, context}) {

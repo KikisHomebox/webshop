@@ -10,12 +10,8 @@ const seo = ({data}) => ({
   title: `${data?.product?.title} | Kiki's Home Box`,
 
   description:
-    window.location.href === 'https://kikishomebox.com/fi' ||
-    window.location.href.includes('/fi/')
-      ? `${data?.product?.description.split('.')[0]}` +
-        `. Osta ${data?.product?.title.toLowerCase()} Kiki's Home Boxista!`
-      : `${data?.product?.description.split('.')[0]}` +
-        `. Buy ${data?.product?.title.toLowerCase()} from Kiki's Home Box!`,
+    `${data?.product?.description.split('.')[0]}` +
+    `. Buy ${data?.product?.title.toLowerCase()} from Kiki's Home Box!`,
 });
 
 export const handle = {
