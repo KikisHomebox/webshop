@@ -4,3 +4,4 @@ apidoc
 build
 .vscode
 package-lock.json
+venv

@@ -7,3 +7,9 @@ node_modules
 .env
 .shopify
 /coverage
+venv
+.vscode
+log.html
+output.xml
+report.html
+selenium-screenshot*
