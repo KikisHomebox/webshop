@@ -34,7 +34,7 @@ const SingleBlogPage = ({article, blogs, recommendedProducts}) => {
       setSuggestedArticle();
       setArticleText();
     };
-  }, [article]);
+  }, [article, blogs]);
 
   return (
     <div>

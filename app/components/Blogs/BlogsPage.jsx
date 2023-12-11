@@ -14,7 +14,7 @@ const BlogsPage = ({blogs, recommendedProducts}) => {
     const firstPageIndex = (currentPage - 1) * BLOGS_PER_PAGE;
     const lastPageIndex = firstPageIndex + BLOGS_PER_PAGE;
     return blogs.articles.nodes.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]);
+  }, [currentPage, blogs.articles.nodes]);
 
   return (
     <div className="blogs-flex">
@@ -22,6 +22,7 @@ const BlogsPage = ({blogs, recommendedProducts}) => {
       <div className="blogs-grid">
         {currentData.map((node, idx) => (
           <Link
+            key={`blog-${node.blog.handle}`}
             to={`/blogs/${node.blog.handle}/${node.handle}`}
             className="blogs-a"
             key={`blog-${node.handle}-${idx}`}

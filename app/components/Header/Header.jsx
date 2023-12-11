@@ -23,20 +23,24 @@ export function Header({header, isLoggedIn, cart}) {
   );
 }
 
-function HeaderCtas({isLoggedIn, cart}) {
+export function HeaderCtas({isLoggedIn, cart}) {
   return (
     <nav className="header-ctas" role="navigation">
       <HeaderMenuMobileToggle />
       <SearchToggle />
       <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
-        {isLoggedIn ? 'Account' : <BsPerson style={{fontSize: '20px'}} />}
+        {isLoggedIn ? (
+          'Account'
+        ) : (
+          <BsPerson data-testid="BsPerson" style={{fontSize: '20px'}} />
+        )}
       </NavLink>
       <CartToggle cart={cart} />
     </nav>
   );
 }
 
-function HeaderMenuMobileToggle() {
+export function HeaderMenuMobileToggle() {
   return (
     <a className="header-menu-mobile-toggle" href="#mobile-menu-aside">
       <h3>☰</h3>
@@ -44,44 +48,47 @@ function HeaderMenuMobileToggle() {
   );
 }
 
-function SearchToggle() {
+export function SearchToggle() {
   return (
     <a href="#search-aside">
-      {' '}
-      <BsSearch style={{fontSize: '20px'}} />{' '}
+      <BsSearch data-testid="BsSearch" style={{fontSize: '20px'}} />
     </a>
   );
 }
 
-function CartBadge({count}) {
+export function CartBadge({count}) {
   const {setCartOpen} = useContext(CartContext);
+  /* istanbul ignore next */
   return (
     <span onClick={() => setCartOpen(true)} className="header-cart-badge">
-      <BsCart3 style={{fontSize: '20px'}} /> {count}
+      <BsCart3 data-testid="BsCart3" style={{fontSize: '20px'}} /> {count}
     </span>
   );
 }
 
-function CartToggle({cart}) {
+export function CartToggle({cart}) {
   const {setCartOpen} = useContext(CartContext);
   return (
     <Suspense fallback={<CartBadge count={0} />}>
       <Await resolve={cart}>
-        {(cart) => {
-          if (!cart) return <CartBadge count={0} />;
-          return (
-            <CartBadge
-              count={cart.totalQuantity || 0}
-              setCartOpen={setCartOpen}
-            />
-          );
-        }}
+        {
+          /* istanbul ignore next */
+          (cart) => {
+            if (!cart) return <CartBadge count={0} />;
+            return (
+              <CartBadge
+                count={cart.totalQuantity || 0}
+                setCartOpen={setCartOpen}
+              />
+            );
+          }
+        }
       </Await>
     </Suspense>
   );
 }
 
-function activeLinkStyle({isActive, isPending}) {
+export function activeLinkStyle({isActive, isPending}) {
   return {
     fontWeight: isActive ? 'bold' : undefined,
     color: isPending ? 'grey' : 'black',

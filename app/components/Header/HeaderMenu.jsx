@@ -15,17 +15,6 @@ export function HeaderMenu({menu, viewport}) {
 
   return (
     <nav className={className} role="navigation">
-      {viewport === 'mobile' && (
-        <NavLink
-          end
-          onClick={closeAside}
-          prefetch="intent"
-          style={activeLinkStyle}
-          to="/"
-        >
-          Home
-        </NavLink>
-      )}
       {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
         if (!item.url) return null;
         const hostName = new URL(item.url).hostname;
@@ -103,7 +92,7 @@ const FALLBACK_HEADER_MENU = {
   ],
 };
 
-function activeLinkStyle({isActive, isPending}) {
+export function activeLinkStyle({isActive, isPending}) {
   return {
     fontWeight: isActive ? 'bold' : undefined,
     color: isPending ? 'grey' : 'black',
