@@ -33,6 +33,7 @@ const DropdownMenu = ({
               e.stopPropagation();
               selectOption(item.label);
             }}
+            data-testid={`menu-option-${item.label}`}
           >
             {item.value}
           </div>

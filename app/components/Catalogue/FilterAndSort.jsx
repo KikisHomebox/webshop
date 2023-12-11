@@ -165,6 +165,7 @@ const FilterAndSort = ({
             <span
               className="filter-item"
               onClick={() => setAvailabilityFilter('all')}
+              data-testid="filter-item-availability"
             >
               {
                 availability.find((item) => item.label === availabilityFilter)
@@ -176,6 +177,7 @@ const FilterAndSort = ({
           {(minPrice !== 0 || maxPrice !== 549.99) && (
             <span
               className="filter-item"
+              data-testid="filter-item-price"
               onClick={() => {
                 setMinPrice(0);
                 setMaxPrice(549.99);
@@ -196,6 +198,7 @@ const FilterAndSort = ({
           {collectionFilter !== '' && (
             <span
               className="filter-item"
+              data-testid="filter-item-collection"
               onClick={() => setCollectionFilter('')}
             >
               {
