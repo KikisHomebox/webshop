@@ -26,7 +26,7 @@
 }
 
 .blogs-a {
-  background-color: #754e2f;
+  background-color: var(--primary);
   width: 100%;
   overflow: hidden;
   position: relative;

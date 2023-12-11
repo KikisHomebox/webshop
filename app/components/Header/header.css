@@ -15,11 +15,18 @@
 }
 
 .header-top {
-  background: #754e2f;
+  background: var(--primary);
   height: 2.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.header-top p {
+  color: white;
+  letter-spacing: 0.06rem;
+  font-family: serif;
+  line-height: 1.6;
 }
 
 .header-cart-badge:hover {
