@@ -116,4 +116,3 @@ textarea:not(:placeholder-shown) + label {
   transform: translateY(-0.53em) scale(0.75);
   transition: transform 75ms ease-in-out;
 }
-

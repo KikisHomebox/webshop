@@ -25,7 +25,6 @@ const BlogsPage = ({blogs, recommendedProducts}) => {
             key={`blog-${node.blog.handle}`}
             to={`/blogs/${node.blog.handle}/${node.handle}`}
             className="blogs-a"
-            key={`blog-${node.handle}-${idx}`}
           >
             <BlogCard
               key={node.id}

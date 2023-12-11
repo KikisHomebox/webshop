@@ -89,9 +89,6 @@ export function CartMain({layout, cart}) {
 
 function CartDetails({layout, cart}) {
   const cartHasItems = !!cart && cart.totalQuantity > 0;
-  const withDiscount =
-    cart &&
-    Boolean(cart.discountCodes.filter((code) => code.applicable).length);
 
   if (layout === 'aside') {
     return (
@@ -100,12 +97,10 @@ function CartDetails({layout, cart}) {
           <span>Product</span>
           <span>Total</span>
         </div>
-        <CartLines
-          withDiscount={withDiscount}
-          lines={cart?.lines}
-          layout={layout}
-        />
-        {cartHasItems && <CartSummary cost={cart.cost} layout={layout} />}
+        <CartLines lines={cart?.lines} layout={layout} />
+        {cartHasItems && (
+          <CartSummary cost={cart.cost} layout={layout} cart={cart} />
+        )}
       </>
     );
   }
@@ -116,11 +111,7 @@ function CartDetails({layout, cart}) {
         <span>Quantity</span>
         <span>Total</span>
       </div>
-      <CartLines
-        withDiscount={withDiscount}
-        lines={cart?.lines}
-        layout={layout}
-      />
+      <CartLines lines={cart?.lines} layout={layout} />
       <CartSummary cost={cart.cost} layout={layout} cart={cart} />
     </>
   );
@@ -156,11 +147,7 @@ function CartLineItem({layout, line}) {
 
         <div className="cart-line-aside-detail">
           <span className="cart-line-web-title">Kiki&apos;s homebox</span>
-          <Link
-            prefetch="intent"
-            to={lineItemUrl}
-            onClick={() => (window.location.href = lineItemUrl)}
-          >
+          <Link prefetch="intent" to={lineItemUrl}>
             <h4 className="cart-line-product-title">{product.title}</h4>
           </Link>
           <div className="cart-line-text">
@@ -199,11 +186,7 @@ function CartLineItem({layout, line}) {
       )}
       <div className="cart-line-page-description">
         <span className="cart-line-web-title">Kiki&apos;s homebox</span>
-        <Link
-          prefetch="intent"
-          to={lineItemUrl}
-          onClick={() => (window.location.href = lineItemUrl)}
-        >
+        <Link prefetch="intent" to={lineItemUrl}>
           <h4 className="cart-line-product-title">{product.title}</h4>
         </Link>
         <div className="cart-line-text">
@@ -273,20 +256,6 @@ export function CartSummary({cost, layout, cart}) {
         />
       </div>
     </div>
-  );
-}
-
-function CartLineRemoveButton({lineIds}) {
-  return (
-    <CartForm
-      route="/cart"
-      action={CartForm.ACTIONS.LinesRemove}
-      inputs={{lineIds}}
-    >
-      <button className="cart-line-remove-btn" type="submit">
-        <AiOutlineDelete />
-      </button>
-    </CartForm>
   );
 }
 
@@ -408,7 +377,21 @@ export function CartEmpty({layout = 'aside'}) {
   );
 }
 
-function CartLineUpdateButton({children, lines}) {
+export function CartLineRemoveButton({lineIds}) {
+  return (
+    <CartForm
+      route="/cart"
+      action={CartForm.ACTIONS.LinesRemove}
+      inputs={{lineIds}}
+    >
+      <button className="cart-line-remove-btn" type="submit">
+        <AiOutlineDelete />
+      </button>
+    </CartForm>
+  );
+}
+
+export function CartLineUpdateButton({children, lines}) {
   return (
     <CartForm
       route="/cart"
@@ -420,7 +403,7 @@ function CartLineUpdateButton({children, lines}) {
   );
 }
 
-const CartOrderNote = ({layout}) => {
+export const CartOrderNote = ({layout}) => {
   const [noteOpen, setNoteOpen] = useState(false);
   const [cartNote, setCartNote] = useState('');
   if (layout === 'aside') {
