@@ -80,7 +80,14 @@ const Catalogue = ({products, collections}) => {
       default:
         return filteredData;
     }
-  }, [availabilityFilter, minPrice, maxPrice, sort, collectionFilter]);
+  }, [
+    availabilityFilter,
+    minPrice,
+    maxPrice,
+    sort,
+    collectionFilter,
+    products.nodes,
+  ]);
 
   const currentData = useMemo(() => {
     const firstPageIdx = (currentPage - 1) * PRODUCT_PER_PAGE;
