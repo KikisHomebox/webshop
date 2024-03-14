@@ -22,10 +22,21 @@ Hydrogen is Shopify’s stack for headless commerce. Hydrogen is designed to dov
 **Requirements:**
 
 - Node.js version 16.14.0 or higher
+- You have the staff role on the Shopify store that you're working with
+- You have Apps and channels permissions on the Shopify store that you're working with
 
+**Creating .env -file**
+
+- Create empty file '.env'
+- Get your API from Shopify
+- Edit the '.env' file to:
 ```bash
-npm create @shopify/hydrogen@latest
+SESSION_SECRET="foobar"
+PUBLIC_STOREFRONT_API_TOKEN="your_API_token"
+PUBLIC_STORE_DOMAIN="your_website_address"
 ```
+
+[Getting started with the Storefront API](https://shopify.dev/docs/custom-storefronts/building-with-the-storefront-api/getting-started)
 
 ## Building for production
 
