@@ -59,6 +59,7 @@ To run the tests, you need to first set the developer password in your environme
 export LOGIN_PASSWORD=yourpassword
 ```
 replace `yourpassword` with the actual password.
+
 2. Add a line to `.test.env` file:
 
 ```bash
