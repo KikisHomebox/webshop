@@ -49,3 +49,25 @@ npm run build
 ```bash
 npm run dev
 ```
+## How to run tests
+
+To run the tests, you need to first set the developer password in your environment variables. This can be done in two ways:
+
+1. Using the `export` command in your terminal:
+
+```bash
+export LOGIN_PASSWORD=yourpassword
+```
+replace `yourpassword` with the actual password.
+2. Add a line to `.test.env` file:
+
+```bash
+LOGIN_PASSWORD=yourpassword
+```
+replace `yourpassword` with the actual password.
+
+Then you can run the tests with the following command:
+
+```bash
+npm test
+```
