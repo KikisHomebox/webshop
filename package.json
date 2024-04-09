@@ -28,6 +28,7 @@
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
     "isbot": "^3.6.6",
+    "puppeteer": "^22.6.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
@@ -60,18 +61,8 @@
     "node": ">=16.13"
   },
   "jest": {
-    "testEnvironment": "jsdom",
-    "moduleNameMapper": {
-      "^~/(.*)$": "<rootDir>/app/$1",
-      "^.+\\.(avif|svg)$": "identity-obj-proxy"
-    },
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest",
-      "^.+\\.css$": "jest-css-modules-transform"
-    },
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "\\.css$"
+    "testMatch": [
+      "<rootDir>/tests/**/*.{ts,tsx,js,jsx}"
     ]
   }
 }

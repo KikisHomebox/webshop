@@ -10,6 +10,8 @@ jobs:
   Jest-testing:
     name: Run written unittests
     runs-on: ubuntu-latest
+    environment: 
+      name: TEST
     permissions:
       contents: read
       security-events: write
@@ -17,11 +19,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Install ESLint
-        run: |
-          npm install
-
+      - name: Install dependencies
+        run: npm install
       - name: Run Testing
-        run: npm run test
-        continue-on-error: false
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: 3
+          command: npm test
+          timeout_minutes: 10
+        env:
+          LOGIN_PASSWORD: ${{ secrets.PASSWORD }}
