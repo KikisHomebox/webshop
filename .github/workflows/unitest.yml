@@ -19,10 +19,6 @@ jobs:
         uses: actions/checkout@v3
       - name: Install dependencies
         run: npm install
-      - name: Print LOGING_PASSWORD
-        run: echo "LOGIN_PASSWORD: ${{ secrets.PASSWORD }}"
-        env:
-          LOGIN_PASSWORD: ${{ secrets.PASSWORD }}
       - name: Run Testing
         uses: nick-invision/retry@v2
         with:
