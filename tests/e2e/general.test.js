@@ -1,23 +1,18 @@
 const { timeout } = require('puppeteer');
+const { setup, teardown} = require('./setup');
 const puppeteer = require('puppeteer');
 require('dotenv').config({ path: './.test.env' });
 const URL = process.env.URL;
-const LOGIN_PASSWORD = process.env.LOGIN_PASSWORD;
 const HOME_TITLE = process.env.HOME_TITLE;
 
 describe('General Tests', () => {
-  let browser;
   let page;
   beforeAll(async () => {
-    browser = await puppeteer.launch();
-    page = await browser.newPage();
-    await page.goto(URL);
-    await page.type('#password', LOGIN_PASSWORD);
-    await page.click('body > div > div.content > div:nth-child(2) > form > button');
-    await timeout(3000);
+     page = await setup(); 
   });
+
   afterAll(async () => {
-    await browser.close();
+    await teardown();
   });
 
   test('Check if the status is 304', async () => {
