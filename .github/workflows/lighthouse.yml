@@ -2,6 +2,8 @@ name: Shopify Lighthouse CI
 on: [push]
 jobs:
   lhci:
+    environment: 
+      name: TEST
     name: Lighthouse
     runs-on: ubuntu-latest
     steps:
